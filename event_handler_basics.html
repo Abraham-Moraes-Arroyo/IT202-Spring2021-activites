@@ -37,26 +37,27 @@
     </blockquote>
 
     <script>
+        //when the user moves the mouse on the pic
+        function mouseOverPic() { this.classList.add("bigger"); } 
+    
+        //when the user moves the mouse away from the pic
+        function mouseAwayPic() { this.classList.remove("bigger"); }
 
+        //the actual beef and potatos in terms of the mouse going over and away the pictures
+        let picElem= document.querySelectorAll("div > img ");
+        for (let imgs of picElem){
+            imgs.addEventListener("mouseover", mouseOverPic);
+            imgs.addEventListener("mouseout", mouseAwayPic);
+        }
         
-
-
-document.addEventListener("click", [window.open('https://quoteinvestigator.com/2014/05/27/rising/')]);
-        <!--I currently have an error on this part, because when I open the page for the first time the link of the quote gets triggered.-->
-
-var image=document.getElementById("images");
-        image.addEventListener("mouseover", function(){
-            this.width="300"
+        function clickedQuote(){
+            let urlFromQuote= this.getAttribute("cite");
+            window.open(urlFromQuote);
+        }
+        let quote=document.querySelector("blockquote");
+        quote.addEventListener("click", clickedQuote);
         
-        });
-// image.removeElementListener("mouseover", function(){
-//             this.width="300"
-//         });
-var imageReduction=document.getElementById("images");
-        imageReduction.addEventListener("mouseout",function(){
-            this.width="" 
-            <!--this should return the size of the image back to normal-->
-        });
+        <!--Where I learned to use the word this. https://www.w3schools.com/js/js_this.asp#:~:text=The%20JavaScript%20this%20keyword%20refers,refers%20to%20the%20global%20object.-->
     </script>
 
 
