@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            //create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'school_type');
+            data.addColumn('number', 'count_school_type');
+            //
+            fetch("https://data.cityofchicago.org/resource/dw27-rash.json?$SELECT=school_type,count(school_type)&$GROUP=school_type")
+                .then((response) => {
+                    return response.json()
+                })
+                .then((schoolType) => {
+                    schoolType.forEach((record) => {
+                        data.addRow([record.school_type, parseInt(record.count_school_type)])
+                    });
+                    var options = {
+                        title: 'schools types and their counts'
+                    };
+                    var chart = new google.visualization.PieChart(document.querySelector('#piechart'));
+                    chart.draw(data, options);
+                });
+
+        //create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'date');
+            data.addColumn('number', 'Number of multiple doses given');
+            //
+            fetch("https://data.cityofchicago.org/resource/553k-3xzc.json?$SELECT=date,sum(total_doses_cumulative)&$GROUP=date&$ORDER=date")
+                .then((response) => {
+                    return response.json()
+                })
+                .then((schoolType) => {
+                    schoolType.forEach((record) => {
+                        data.addRow([record.date.substring(0,10), parseInt(record.sum_total_doses_cumulative)])
+                    });
+                    var options = {
+                        title: 'Days and the amount of multiple doses'
+                    };
+                    var chart = new google.visualization.LineChart(document.querySelector('#linechart'));
+                    chart.draw(data, options);
+                });
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <div id="linechart" style="width: 800px; height: 400px;"></div>
+
+</body>
+
+</html>
