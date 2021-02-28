@@ -19,7 +19,6 @@
       let ctx=canvas.getContext("2d");
       
       ctx.fillStyle= "blue";
-      ctx.strokeStyle= "green";
       
       ctx.beginPath();
       ctx.rect(200,200,250,300); //add points
@@ -29,10 +28,12 @@
       
 
       let circle=canvas.getContext("2d");
+
       circle.fillStyle= "red";
+      circle.beginPath();
       circle.arc(100,100,25,0, Math.PI*2)
       circle.fill();
-      
+      circle.closePath
     </script>
   </body>
 </html>
