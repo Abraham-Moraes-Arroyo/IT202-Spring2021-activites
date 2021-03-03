@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
+    <title>lab8.html</title>
 
 
   </head>
@@ -22,21 +22,6 @@
       gameObjs.push( {x: 250, y: 250, radius: 25, color: "red" } )
       gameObjs.push( {x: 275, y: 275, radius: 25, color: "green" } )
       gameObjs.push( {x: 200, y: 300, radius: 25, color: "blue" } )
-
-
-
-      //this is for the 25 random circles
-      for(let i =0; i<25; i++) {
-        
-        let randX = 25 + (Math.random() * (c.width - (2 * 25)));
-        let randY = 25 + (Math.random() * (c.height - (2 * 25)));
-        //here the random colors are set
-        let randColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
-        gameObjs.push( {x: randX, y: randY, radius: 25, color: randColor } )
-
-      }
-
-
 
       gameObjs.forEach( (obj) => {
         ctx.beginPath()
@@ -60,7 +45,7 @@
       }
       console.log(areColliding(gameObjs[0],gameObjs[1]))
       console.log(areColliding(gameObjs[0],gameObjs[2]))
-
+      //this is for the circles that we have been given
       function drawCircle(obj,stroke){
         ctx.beginPath()
         ctx.arc(obj.x, obj.y, obj.radius, 0, Math.PI*2);
@@ -73,9 +58,7 @@
         }
       }
       
-      // loop the objects to compare every pair
-      //    and if a pair are colliding, redraw them
-      //    with a white border
+     //loops and checks if the first 3 circles are colliding or not
       if (areColliding (gameObjs[0],gameObjs[1])){//meaning if they are colliding
         
         drawCircle(gameObjs[0], true);
@@ -83,8 +66,46 @@
       }
 
       // once you get that working, update the code above to create 25 additional gameObjects with random x, y and color values; and push them to the array before the drawing and comparison
+      
+      //this is for the 25 random circles and I set the color values here too
+      for(let i =0; i<25; i++) {
+        //seting the space that the circle is going to take
+        let randX = 25 + (Math.random() * (c.width - (2 * 25)));
+        let randY = 25 + (Math.random() * (c.height - (2 * 25)));
+        //here the random colors are set
+        let randColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        gameObjs.push( {x: randX, y: randY, radius: 25, color: randColor } )
+      // for the random color generating I looked online for where I can start, and if a piece of code that I really liked and used it in this solution the link to the code is:
+      // https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
 
 
+
+      }
+
+      gameObjs.forEach( (oneCircle) => {
+        gameObjs.forEach( (anotherCircle) => {
+          //creates the space where the border will be placed
+          let otherBorders= (obj, borderNum, borderColor)=>{
+            ctx.beginPath();
+            ctx.arc(obj.x, obj.y, obj.radius, 0, 2*Math.PI);
+            ctx.strokeStyle= 'white';//the actual color
+            ctx.fillStyle= obj.color;
+            ctx.lineWidth= borderNum; 
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+          // Makes sure that we are not checking the other circle, if we aren't then we move on to the next funtion.
+          if (oneCircle != anotherCircle) {
+            // check if the circles are colliding
+            if (areColliding(oneCircle, anotherCircle)) {
+              // the circles that are not the original ones are drawn with borders if they collide with one another
+              otherBorders(oneCircle, 5, "white");
+              otherBorders(anotherCircle, 5, "white");
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>
