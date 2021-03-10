@@ -2,21 +2,59 @@
 <html>
 <body>
 
-<h1>My First Google Map</h1>
+<h1>Geolocation and Google Maps</h1>
 
 <div id="googleMap" style="width:100%;height:400px;"></div>
 
 <script>
+let map;
 function myMap() {
 var mapProp= {
-  center:new google.maps.LatLng(51.508742,-0.120850),
-  zoom:5,
+  center:new google.maps.LatLng(41.931293499999995,-87.766255),
+  zoom:15,
 };
-var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showPosition);
+}
+
+
+// <!-- add a div element to the html and in the show position log it -->
+
+//for drawing circles
+
+console.log("hello");
+// const cityCircle = new google.maps.Circle({
+//       strokeColor: "#FF0000",
+//       strokeOpacity: 0.8,
+//       strokeWeight: 2,
+//       fillColor: "#FF0000",
+//       fillOpacity: 0.35,
+//       map,
+//       center: new google.maps.LatLng(41.931293499999995,-87.766255),
+//       radius: 60,
+//     });
+}
+console.log("goodbye")
+
+
+function showPosition(position) {
+  let cityCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map,
+      center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+      radius: 60,
+    });
+    console.log(position.coords.latitude , 
+     position.coords.longitude);
 }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLUf62RCvErgmFdYnI8TMcBn9MoNcYcCU&callback=myMap"></script>
 
 </body>
 </html>
