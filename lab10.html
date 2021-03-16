@@ -16,13 +16,38 @@
           Enter text here
 </textarea>
 <br></br>
-<select>
-	<option value=""></option>
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
-  </select>
+<!-- Below is the typescript that allows the select feature to get all the languages that the machine is capable of. I have gotten this piece of code from the following link:
+https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices
+ -->
+<script>
+  function populateVoiceList() {
+  if(typeof speechSynthesis === 'undefined') {
+    return;
+  }
+
+  var voices = speechSynthesis.getVoices();
+
+  for(var i = 0; i < voices.length; i++) {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    document.getElementById("voiceSelect").appendChild(option);
+  }
+}
+
+populateVoiceList();
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+</script>
+<select id="voiceSelect"></select>
+
  
 
     <button type="button" disabled>Click Me!</button>
