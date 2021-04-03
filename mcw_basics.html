@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <link href="https://unpkg.com/material-components-web@10.0.0/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@10.0.0/dist/material-components-web.min.js"></script>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
   <body>
     <script src="script.js"></script>
-    <!-- this is for the enter your name -->
-<label class="mdc-text-field mdc-text-field--filled mdc-text-field--no-label">
-  <span class="mdc-text-field__ripple"></span>
-  <input class="mdc-text-field__input" type="text" placeholder="Enter your name" aria-label="Label">
-  <span class="mdc-line-ripple"></span>
-</label>
+    <!-- here are the requirements that the Doctor wants -->
 
-    <!-- this is for the button  -->
+    <!-- this is for the enter your name -->
+  <label class="mdc-text-field mdc-text-field--filled mdc-text-field--no-label">
+    <span class="mdc-text-field__ripple"></span>
+    <input class="mdc-text-field__input" type="text" placeholder="Enter your name" aria-label="Label" id="userInput">
+    <span class="mdc-line-ripple"></span>
+  </label>
+
+      <!-- this is for the button  -->
       <div class="mdc-touch-target-wrapper">
 <button class="mdc-button mdc-button--raised">
     <span class="mdc-button__ripple"></span>
     <span class="mdc-button__label">Show Snackbar</span>
-    <span class="mdc-button__touch"></span>
+    <!-- I do this in order to have the user's input be printed on the snackbar -->
+    <span class="mdc-button__touch" onclick="Othername()"></span>
+    
   </button>
 
-  <!-- this is for the Snackbar section of the code -->
-<div class="mdc-snackbar">
-  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-    <div class="mdc-snackbar__label" aria-atomic="false">
-      You entered
-    </div>
-    <div class="mdc-snackbar__actions" aria-atomic="true">
-      <button type="button" class="mdc-button mdc-snackbar__action">
-        <div class="mdc-button__ripple"></div>
-        <span class="mdc-button__label">You entered</span>
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-   
+<!-- the function that will print the input stuff at the moment I have it just to print the the text input. I will eventually make it so it triggers the snackbar to appear-->
+<script>
+  function Othername()
+  {
+    var input= document.getElementById(("userInput"));
+    // I got the user's input be stored in the variable and be printed out. Now I need to figure out how to trigger the snackbar to appear and have the name be printed along with the phrase: you entered ___. 
 
+    console.log("You have entered: " + input.value);
+  }
+  </script>
   </body>
 </html>
