@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+      <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+      <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
   <body>
-    <script src="script.js"></script>
-    <!-- here are the requirements that the Doctor wants -->
-
-    <!-- this is for the enter your name -->
-  <label class="mdc-text-field mdc-text-field--filled mdc-text-field--no-label">
+<!-- I got my main insperation from today's class 4/7/2021 example -->
+    <!-- <input type="text" placeholder="Enter your name" class="mdc-button__touch"> -->
+    <label class="mdc-text-field mdc-text-field--filled mdc-text-field--no-label">
     <span class="mdc-text-field__ripple"></span>
     <input class="mdc-text-field__input" type="text" placeholder="Enter your name" aria-label="Label" id="userInput">
     <span class="mdc-line-ripple"></span>
   </label>
+  
+<!--The button part of the assignment  -->
+    <button id="save" class="mdc-button mdc-button--raised">Show Snacknar</button>
+<!-- the Snackbar part of the assignment -->
+    <div class="mdc-snackbar">
+      <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+        <div class="mdc-snackbar__label" aria-atomic="false">
+          Can't send photo. Retry in 5 seconds.
+        </div>
+        <div class="mdc-snackbar__actions" aria-atomic="true">
+          <button type="button" class="mdc-button mdc-snackbar__action">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Retry</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-      <!-- this is for the button  -->
-      <div class="mdc-touch-target-wrapper">
-<button class="mdc-button mdc-button--raised">
-    <span class="mdc-button__ripple"></span>
-    <span class="mdc-button__label">Show Snackbar</span>
-    <!-- I do this in order to have the user's input be printed on the snackbar -->
-    <span class="mdc-button__touch" onclick="Othername()"></span>
-    
-  </button>
+    <!-- Include Dexie -->
+      <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script>
 
-<!-- the function that will print the input stuff at the moment I have it just to print the the text input. I will eventually make it so it triggers the snackbar to appear-->
-<script>
-  function Othername()
-  {
-    var input= document.getElementById(("userInput"));
-    // I got the user's input be stored in the variable and be printed out. Now I need to figure out how to trigger the snackbar to appear and have the name be printed along with the phrase: you entered ___. 
+     let snackbar = mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
 
-    console.log("You have entered: " + input.value);
-  }
-  </script>
-  </body>
+
+    // Define your database
+
+    var db = new Dexie("app_db");
+    db.version(1).stores({
+        names: 'name'
+    });
+
+
+      document.querySelector("#save").addEventListener("click", (e) => {
+        let value = document.querySelector("input").value;
+        db.names.put({name: value, date: new Date()})
+          .then ( (item) => {
+
+              snackbar.labelText = "You have entered "+ value ;
+              snackbar.open();
+
+          });
+      }); 
+
+
+    </script>
+  
+</body>
 </html>
